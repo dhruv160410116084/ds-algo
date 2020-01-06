@@ -1,5 +1,3 @@
-package oldPrimeNumber;
-
 import java.util.Scanner;
 
 public class oldPrimeNumber {
