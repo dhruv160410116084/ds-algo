@@ -166,7 +166,6 @@ public static void main(String args[]){
         max_heap.insert(1);
         System.out.println("intital arr:");
         max_heap.print();
-
         max_heap.buildHeap();
         System.out.println("\nfinal max:");
         max_heap.print();
