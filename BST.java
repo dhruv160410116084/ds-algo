@@ -14,6 +14,11 @@ class BST{
             right=null;
             level = 0;
         }
+
+        @Override
+        protected void finalize() throws Throwable {
+            System.out.println(" "+this.data+" node deleted");
+        }
     }
 
     void insert (int data){
@@ -47,7 +52,6 @@ class BST{
 
 
     Node getMinimum(Node temp){
-        // System.out.println("-->"+temp);
         if(temp == null)
              temp = root;
         while(temp.left != null){
@@ -87,6 +91,46 @@ class BST{
             p=p.parent;
         }
         return p;
+    }
+
+    void transplant(Node u,Node v){
+        // System.out.println("u: "+u.data+" v: "+v.data);
+        if(u.parent == null){
+            root =v;
+        }
+        else if(u == u.parent.left){
+            u.parent.left = v;
+            System.out.println("in parent left");
+        }else{
+            System.out.println("in parent right");
+            u.parent.right =v;
+        }
+        if(v != null){
+            v.parent=u.parent;
+        }
+    }
+
+    void remove(Node n){
+        if(n.left == null){
+            transplant(n, n.right);
+        }else if(n.right == null){
+            transplant(n, n.left);
+        }else{
+            Node y =getMinimum(n.right);
+            if(y.parent != n){
+                transplant(y, y.right);
+                y.right=n.right;
+                y.right.parent = y;
+            }
+            y.level=n.level;
+            transplant(n, y);
+            y.left = n.left;
+            y.left.parent = y;
+        }
+        // n.left=null;
+        // n.right=null;
+        // n.parent=null;
+        // n=null;
     }
 
     void print( ){
@@ -151,6 +195,10 @@ class BST{
         t.log("max: "+t.getMaximum(null).data);
         t.log("successor: "+t.getSuccessor(t.root).data);
         t.log("predesessor: "+t.getPredecessor(t.root).data);
+        t.remove(t.root.left.left.right);
+        System.gc();
+        t.print();
+        t.log("successor: "+t.getSuccessor(t.root.left).data);
     }
 
 }
