@@ -148,21 +148,41 @@ class BT {
         System.out.println();
     }
 
+    void dfs(Node n){
+        //inorder traversal
+        if(n == null)
+            return ;
+        dfs(n.left);
+        System.out.println(" "+n.data);
+        dfs(n.right);
+    }
+
+    boolean isMirror(Node n1,Node n2){
+      if(n1 == null && n2 == null){
+          return true;
+      }
+      if(n1 != null && n2 != null && n1.data == n2.data)
+        return isMirror(n1.left, n2.right) && isMirror(n1.right, n2.left);
+    return false;
+    }
+
     public static void main(String[] args) {
         BT t = new BT();
         t.insert(1);
         t.insert(2);
+        t.insert(2);
         t.insert(3);
         t.insert(4);
-        t.insert(5);
-        t.insert(6);
-        t.insert(7);
-        t.insert(8);
-        t.insert(9);
-        t.insert(10);
-        t.print();
-      t.delete(1);
-        t.print();
+        t.insert(4);
+        t.insert(3);
+        // t.insert(8);
+        // t.insert(9);
+        // t.insert(10);
+        // t.print();
+        // t.delete(1);
+         t.print();
+        // t.dfs(t.root);
+        System.out.println(t.isMirror(t.root.left,t.root.right));
     }
 
 }
